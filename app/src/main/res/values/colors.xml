@@ -7,11 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Custom colors -->
     <color name="orange">#F4511E</color>
     <color name="gray">#ECECEC</color>
     <color name="grayDark">#656565</color>
     <color name="grayDarkDisabled">#8F8F8F</color>
     <color name="colorText">#282828</color>
     <color name="statusColor">#F4F4F4</color>
+    <color name="strokeColorColor">#1E88E5</color>
+    <color name="opaqueBackGround">#61000000</color>
+
 
 </resources>
