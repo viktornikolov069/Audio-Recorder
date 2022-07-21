@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
     /* Binding variables */
     private lateinit var binding: ActivityMainBinding
-    private lateinit var bindingBottomSheet: BottomSheetBinding
+    //private lateinit var bindingBottomSheet: BottomSheetBinding
 
     /*Permission variables */
     private var permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
         /* View bindings*/
         binding = ActivityMainBinding.inflate(layoutInflater)
-        bindingBottomSheet = BottomSheetBinding.inflate(layoutInflater)
+        //bindingBottomSheet = BottomSheetBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         /* Permissions */
@@ -61,8 +62,16 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
             )
         }
 
-        /* Initialise BottomSheetBehavior */
-        bottomSheetBehaviour = BottomSheetBehavior.from(bindingBottomSheet.bottomSheetSaveRecord)
+        /* --- Initialise BottomSheetBehavior --- */
+
+        /* Simply creating another view binding variable
+           Example -> (bindingBottomSheet:  BottomSheetBinding)
+           and trying to access id -> "bottomSheetSaveRecord" does not work.
+           It gives the error "The view is not a child of CoordinatorLayout".
+           What solved the error was giving the <include> layout its own id
+           "bottomSheetSave" and accessing the actual bottom sheet layout id
+           "bottomSheetSaveRecord" through it. */
+        bottomSheetBehaviour = BottomSheetBehavior.from(binding.bottomSheetSave.bottomSheetSaveRecord)
 
         /* Initialise Timer */
         timer = Timer(this)
@@ -75,6 +84,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
                     isRecording -> pauseRecorder()
                     else -> startRecording()
                 }
+                Log.d("tag", "Test to see if log message works")
             }
 
             btnList.setOnClickListener {
