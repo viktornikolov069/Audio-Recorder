@@ -8,17 +8,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.room.Room
 import com.example.audiorecorder.R
 import com.example.audiorecorder.databinding.ActivityMainBinding
-import com.example.audiorecorder.databinding.BottomSheetBinding
+import com.example.audiorecorder.db.AppDatabase
+import com.example.audiorecorder.db.AudioRecord
+import com.example.audiorecorder.utils.Constants.APP_DATABASE
 import com.example.audiorecorder.utils.Constants.REQUEST_CODE
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -40,6 +46,15 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     private var filename = ""
     private var isRecording = false
     private var isPaused = false
+    private var duration = ""
+
+    /* Database variable */
+    private val appDB: AppDatabase by lazy {
+        Room.databaseBuilder(this, AppDatabase::class.java, APP_DATABASE)
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
     /* Timer variables */
     private lateinit var timer: Timer
@@ -196,6 +211,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         timer.stop()
         recorder.apply {
             stop()
+            reset() // In test!!!
             release()
         }
 
@@ -216,6 +232,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     /* --- Overrides --- */
     override fun onTimerTick(duration: String) {
         binding.tvTimer.text = duration
+        this.duration = duration.dropLast(3)
     }
 
     override fun onRequestPermissionsResult(
@@ -253,6 +270,19 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         if (newFilename != filename) {
             var newFile = File("$dirPath$newFilename.mp3")
             File("$dirPath$newFilename.mp3").renameTo(newFile)
+        }
+
+        /* Database variables */
+        var filePath = "$dirPath$newFilename.mp3"
+        var timestamp = Date().time
+        //var ampsPath = "$dirPath$newFilename" // for drawing
+
+        var record = AudioRecord(newFilename, filePath, timestamp, duration)
+
+        /* Running on background thread for better performance */
+        GlobalScope.launch {
+            appDB.audioRecordDao().insert(record)
+            Log.d("tag", "saving test")
         }
     }
 }
