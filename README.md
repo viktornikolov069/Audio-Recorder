@@ -25,7 +25,7 @@ The following **functionality** is completed:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/viktornikolov069/BudgetTracker/blob/main/budget_tracker.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
