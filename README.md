@@ -16,10 +16,10 @@ The following **functionality** is completed:
 * [x] Room database is used to store the audio files in a mp3 format.
 
 **TO DO REQUIRED**
-* [x] List of existing recordings
-* [x] Check details about record.
-* [x] Listen to a recording.
-* [x] Delete a recording.
+* [ ] List of existing recordings
+* [ ] Check details about record.
+* [ ] Listen to a recording.
+* [ ] Delete a recording.
 
 ## Video Walkthrough
 

@@ -132,9 +132,8 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
             btnDelete.setOnClickListener {
                 stopRecorder()
-                File("$dirPath$filename.mp3")
+                File("$dirPath$filename.mp3").delete()
                 Toast.makeText(this@MainActivity, "Record deleted", Toast.LENGTH_SHORT).show()
-
             }
             btnDelete.isClickable = false
 
