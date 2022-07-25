@@ -2,6 +2,7 @@ package com.example.audiorecorder.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -11,12 +12,19 @@ import com.example.audiorecorder.db.AudioRecord
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AudioAdapter: RecyclerView.Adapter<AudioAdapter.AudioHolder>() {
+class AudioAdapter(var listener: OnItemClickListener): RecyclerView.Adapter<AudioAdapter.AudioHolder>() {
 
     private lateinit var binding: ItemLayoutBinding
     private lateinit var context: Context
 
-    inner class AudioHolder: RecyclerView.ViewHolder(binding.root) {
+    inner class AudioHolder: RecyclerView.ViewHolder(binding.root), View.OnClickListener,
+                             View.OnLongClickListener {
+
+        init {
+            binding.root.setOnClickListener(this)
+            binding.root.setOnLongClickListener(this)
+        }
+
         fun bind(record: AudioRecord) {
             binding.apply {
 
@@ -34,6 +42,21 @@ class AudioAdapter: RecyclerView.Adapter<AudioAdapter.AudioHolder>() {
                     context.startActivity(intent)
                 }*/
             }
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClickListener(position)
+            }
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemLongClickListener(position)
+            }
+            return true
         }
     }
 

@@ -17,6 +17,7 @@
     <color name="statusColor">#F4F4F4</color>
     <color name="strokeColorColor">#1E88E5</color>
     <color name="opaqueBackGround">#61000000</color>
+    <color name="playerColor">#FF4349</color>
 
 
 </resources>

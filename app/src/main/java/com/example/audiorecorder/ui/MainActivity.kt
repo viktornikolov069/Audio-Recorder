@@ -269,7 +269,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         val newFilename = binding.bottomSheetSave.etFilenameInput.text.toString()
         if (newFilename != filename) {
             var newFile = File("$dirPath$newFilename.mp3")
-            File("$dirPath$newFilename.mp3").renameTo(newFile)
+            File("$dirPath$filename.mp3").renameTo(newFile)
         }
 
         /* Database variables */
