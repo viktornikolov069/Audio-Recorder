@@ -8,6 +8,9 @@
 
 The following **required functionality** is completed:
 * [x] Create a new audio recording.
+* [x] Create a list of recordings.
+* [x] Listen to recording.
+
 
 The following **functionality** is completed:
 * [x] User can press the record button and record audio. Pause if pressed again.
@@ -16,9 +19,9 @@ The following **functionality** is completed:
 * [x] Room database is used to store the audio files in a mp3 format.
 
 **TO DO REQUIRED**
-* [x] List of existing recordings
+* [x] List of existing recordings.
 * [ ] Check details about record.
-* [ ] Listen to a recording.
+* [x] Listen to a recording.
 * [ ] Delete a recording.
 
 ## Video Walkthrough
