@@ -16,7 +16,7 @@ The following **functionality** is completed:
 * [x] Room database is used to store the audio files in a mp3 format.
 
 **TO DO REQUIRED**
-* [ ] List of existing recordings
+* [x] List of existing recordings
 * [ ] Check details about record.
 * [ ] Listen to a recording.
 * [ ] Delete a recording.
@@ -25,7 +25,7 @@ The following **functionality** is completed:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder_2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
