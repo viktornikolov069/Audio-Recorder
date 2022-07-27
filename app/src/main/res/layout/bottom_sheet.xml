@@ -8,6 +8,7 @@
     android:background="@drawable/background_round"
     android:orientation="vertical">
 
+    <!-- SAVE RECORD LABEL -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,11 +17,13 @@
         android:textSize="26sp"
         android:textAlignment="center"/>
 
+    <!-- RECORD NAME LAYOUT -->
     <com.google.android.material.textfield.TextInputLayout
         style="@style/TextLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- RECORD NAME EDIT TEXT -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etFilenameInput"
             android:layout_width="match_parent"
@@ -32,12 +35,14 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- CANCEL/OK LINEAR LAYOUT -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginBottom="80dp">
 
+        <!-- CANCEL BUTTON LEFT -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="140dp"
@@ -48,6 +53,7 @@
             app:cornerRadius="26dp"
             app:rippleColor="@color/grayDark"/>
 
+        <!-- OK BUTTON RIGHT -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOk"
             android:layout_width="140dp"

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.room.Room
 import com.example.audiorecorder.R
@@ -16,7 +15,6 @@ import com.example.audiorecorder.db.AppDatabase
 import com.example.audiorecorder.db.AudioRecord
 import com.example.audiorecorder.utils.Constants
 import com.example.audiorecorder.utils.Constants.BUNDLE_AUDIO_RECORD_ID
-import com.google.android.material.appbar.MaterialToolbar
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -71,7 +69,6 @@ class AudioPlayerActivity : AppCompatActivity() {
             mtToolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
-
             tvFilename.text = filename
         }
 
@@ -82,6 +79,7 @@ class AudioPlayerActivity : AppCompatActivity() {
             prepare()
         }
 
+        /* Changes the format of the tvTrackDuration */
         binding.tvTrackDuration.text = dateFormat(mediaPlayer.duration)
 
         /* The handler delays a task that will be executed by the MainLooper */
@@ -111,6 +109,7 @@ class AudioPlayerActivity : AppCompatActivity() {
                 R.drawable.ic_play_circle, theme)
         }
 
+        /* --- AudioPlayer Buttons --- */
         binding.apply {
             btnForward.setOnClickListener {
                 mediaPlayer.seekTo(mediaPlayer.currentPosition + jumpValue)
@@ -173,6 +172,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         handler.removeCallbacks(runnable)
     }
 
+    /* Changes "duration" which is in milliseconds to 0:00:00 */
     private fun dateFormat(duration: Int): String {
         var durToSec = duration/1000 //ms to sec
         var sec = durToSec % 60 // 6666sec % 60 = 6sec (extracting the seconds)
