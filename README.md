@@ -28,7 +28,7 @@ The following **functionality** is completed:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder_3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder_4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
