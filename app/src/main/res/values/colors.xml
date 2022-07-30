@@ -18,6 +18,8 @@
     <color name="strokeColorColor">#1E88E5</color>
     <color name="opaqueBackGround">#61000000</color>
     <color name="playerColor">#FF4349</color>
+    <color name="red">#C23B31</color>
+
 
 
 </resources>

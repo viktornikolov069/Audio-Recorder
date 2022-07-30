@@ -16,6 +16,18 @@ class AudioAdapter(var listener: OnItemClickListener): RecyclerView.Adapter<Audi
 
     private lateinit var binding: ItemLayoutBinding
     private lateinit var context: Context
+    private var editMode = false
+
+    fun isEditMode(): Boolean {
+        return editMode
+    }
+
+    fun setEditMode(mode: Boolean) {
+        if (editMode != mode) {
+            editMode = mode
+            //notifyDataSetChanged()
+        }
+    }
 
     inner class AudioHolder: RecyclerView.ViewHolder(binding.root), View.OnClickListener,
                              View.OnLongClickListener {
@@ -35,6 +47,13 @@ class AudioAdapter(var listener: OnItemClickListener): RecyclerView.Adapter<Audi
                 tvFilename.text = record.filename
                 tvMeta.text = "${record.duration} $strDate"
 
+                if (editMode) {
+                    cbChecked.visibility = View.VISIBLE
+                    cbChecked.isChecked = record.isChecked
+                } else {
+                    cbChecked.visibility = View.GONE
+                    cbChecked.isChecked = false
+                }
 
                 /*root.setOnClickListener {
                     val intent = Intent(context, DetailedActivity::class.java)
@@ -69,8 +88,9 @@ class AudioAdapter(var listener: OnItemClickListener): RecyclerView.Adapter<Audi
 
     override fun onBindViewHolder(holder: AudioHolder, position: Int) {
         /* Check if position is valid */
-        if (position != RecyclerView.NO_POSITION)
-        holder.bind(differ.currentList[position])
+        if (position != RecyclerView.NO_POSITION) {
+            holder.bind(differ.currentList[position])
+        }
     }
 
     override fun getItemCount(): Int = differ.currentList.size

@@ -43,12 +43,11 @@
             <!-- RECORD -->
             <ImageButton
                 android:id="@+id/btnRecord"
-                android:layout_width="@dimen/btn_size"
+                android:layout_width="66dp"
                 android:background="@drawable/ic_record"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:layout_height="@dimen/btn_size"/>
-
+                android:layout_height="66dp"/>
 
             <!-- LIST/MENU -->
             <ImageButton
@@ -77,6 +76,7 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:background="@color/opaqueBackGround"/>
+
 
     <include
         android:id="@+id/bottomSheetSave"
