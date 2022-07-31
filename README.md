@@ -17,6 +17,7 @@ The following **functionality** is completed:
 * [x] User can press the done button and a bottom sheet layout will appear in which the save or cancel options are available.
 * [x] User can press the delete button and stop recording and delete audio.
 * [x] Room database is used to store the audio files in a mp3 format.
+* [x] User can search for a recoring unsing the search field.
 
 **TO DO REQUIRED**
 * [x] List of existing recordings.
@@ -28,7 +29,7 @@ The following **functionality** is completed:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder_3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder_4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
