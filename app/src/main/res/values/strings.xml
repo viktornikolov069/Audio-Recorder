@@ -2,5 +2,7 @@
     <string name="app_name">AudioRecorder</string>
     <string name="deleted_transaction">Recording deleted!</string>
     <string name="undo">Undo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

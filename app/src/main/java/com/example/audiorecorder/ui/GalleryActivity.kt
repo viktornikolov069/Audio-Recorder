@@ -46,6 +46,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var oldRecordingList: List<AudioRecord>
     private lateinit var deletedCachedRecording: File
 
+    /* This variable is responsible for the check box inside the recycle view */
+    private var allChecked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGalleryBinding.inflate(layoutInflater)
@@ -114,10 +117,10 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
         }
 
         binding.btnSelectAll.setOnClickListener {
+            allChecked = !allChecked
             audioAdapter.differ.currentList.map {
-                it.isChecked = true
+                it.isChecked = allChecked
             }
-            audioAdapter.setEditMode(true)
             setupRecyclerView()
         }
     }
@@ -155,20 +158,22 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
-    /* Opens AudioPlayerActivity or if EditMode is on it will either check or uncheck the curr row*/
+    /* Opens AudioPlayerActivity or if EditMode is on it will either check or uncheck the curr row */
     override fun onItemClickListener(position: Int) {
         var audioRecord = audioAdapter.differ.currentList[position]
 
-        /*if (audioAdapter.isEditMode()){
+        if (audioAdapter.isEditMode()) {
             audioAdapter.differ.currentList[position].isChecked =
-                !audioAdapter.differ.currentList[position].isChecked*/
-
-        val intent = Intent(this, AudioPlayerActivity::class.java)
-        intent.putExtra(BUNDLE_AUDIO_RECORD_ID, audioRecord.id)
-        startActivity(intent)
+                !audioAdapter.differ.currentList[position].isChecked
+            setupRecyclerView()
+        } else {
+            val intent = Intent(this, AudioPlayerActivity::class.java)
+            intent.putExtra(BUNDLE_AUDIO_RECORD_ID, audioRecord.id)
+            startActivity(intent)
+        }
     }
 
-    /* */
+    /*  */
     override fun onItemLongClickListener(position: Int) {
         audioAdapter.setEditMode(true)
         audioAdapter.differ.currentList[position].isChecked =
@@ -180,7 +185,7 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
 
             binding.editBar.visibility = View.VISIBLE
         }
-        //audioAdapter.notifyItemChanged(position)
+        setupRecyclerView()
     }
 
     private fun deleteRecording(record: AudioRecord) {
