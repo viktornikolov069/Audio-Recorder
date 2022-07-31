@@ -9,6 +9,7 @@
 
     <!-- APPBAR LAYOUT -->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -18,54 +19,50 @@
         android:outlineSpotShadowColor="@android:color/transparent">
 
         <!-- TOOLBAR LAYOUT RECORDINGS -->
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/tlRecordings"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mtToolbarGallery"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="?actionBarSize"
+            app:title="Recordings">
+        </com.google.android.material.appbar.MaterialToolbar>
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/mtToolbarGallery"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:title="Recordings">
-
-
-            </com.google.android.material.appbar.MaterialToolbar>
-
-            <RelativeLayout
-                android:id="@+id/editBar"
-                android:layout_width="match_parent"
-                android:visibility="gone"
+        <RelativeLayout
+            android:id="@+id/editBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
+            <ImageButton
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp">
-
-                <ImageButton
-                    android:id="@+id/btnClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_close" />
-
-                <ImageButton
-                    android:id="@+id/btnSelectAll"
-                    android:background="@drawable/ic_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+                android:background="@drawable/ic_close" />
+            <ImageButton
+                android:id="@+id/btnSelectAll"
+                android:background="@drawable/ic_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"/>
+            <ImageButton
+                android:id="@+id/btnRename"
+                android:layout_width="wrap_content"
+                android:clickable="false"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/ic_rename_disabled" />
+        </RelativeLayout>
 
         <!-- RECYCLE VIEW FILTER  -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintEnabled="false"
             style = "@style/SearchInputStyle">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,5 +83,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <View
+        android:id="@+id/viewBottomSheetBackGround"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/opaqueBackGround"/>
+
+
+    <include
+        android:id="@+id/bsRename"
+        layout="@layout/bottom_sheet_rename"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,13 +1,12 @@
 package com.example.audiorecorder.ui
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,13 +20,11 @@ import com.example.audiorecorder.db.AppDatabase
 import com.example.audiorecorder.db.AudioRecord
 import com.example.audiorecorder.utils.Constants
 import com.example.audiorecorder.utils.Constants.BUNDLE_AUDIO_RECORD_ID
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 
 class GalleryActivity : AppCompatActivity(), OnItemClickListener {
 
@@ -39,6 +36,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    /* Bottom Sheet Rename variables */
+    private lateinit var bottomSheetBehaviour: BottomSheetBehavior<LinearLayout>
 
     /* deletedRecording and oldRecordingList are used when the user uses the UNDO option after
        deleting a row in the recycler view */
@@ -63,6 +63,12 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             onBackPressed()
         }
 
+        /* --- Initialise BottomSheetBehavior and Setup --- */
+
+        bottomSheetBehaviour = BottomSheetBehavior.from(binding.bsRename.bottomSheetRename)
+        bottomSheetBehaviour.peekHeight = 0 // This hides the bottom sheet
+        bottomSheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
+
         /* Filtering the recycle view for a specific file */
         binding.etSearchInput.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -78,10 +84,10 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
         })
 
         /* Hides keyboard on clicking on the tlRecordings (CollapsingToolbarLayout) layout */
-        binding.tlRecordings.setOnClickListener {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(it.windowToken, 0)
-        }
+       //binding.tlRecordings.setOnClickListener {
+       //    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+       //    imm.hideSoftInputFromWindow(it.windowToken, 0)
+       //}
 
         /* Enables swiping and deletes a recording on swipe */
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -112,16 +118,26 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
                     it.isChecked = false
                 }
                 audioAdapter.setEditMode(false)
+                binding.mtToolbarGallery.visibility = View.VISIBLE
                 setupRecyclerView()
             }
-        }
 
-        binding.btnSelectAll.setOnClickListener {
-            allChecked = !allChecked
-            audioAdapter.differ.currentList.map {
-                it.isChecked = allChecked
+            btnSelectAll.setOnClickListener {
+                allChecked = !allChecked
+                audioAdapter.differ.currentList.map {
+                    it.isChecked = allChecked
+                }
+                setupRecyclerView()
             }
-            setupRecyclerView()
+
+            btnRename.isClickable = false
+            btnRename.setOnClickListener {
+                bottomSheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                viewBottomSheetBackGround.visibility = View.VISIBLE
+                tiLayout.visibility = View.GONE
+                val checked = audioAdapter.differ.currentList.filter { it.isChecked }
+                bsRename.etFilenameInput.setText(checked[0].filename)
+            }
         }
     }
 
@@ -165,6 +181,7 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
         if (audioAdapter.isEditMode()) {
             audioAdapter.differ.currentList[position].isChecked =
                 !audioAdapter.differ.currentList[position].isChecked
+            enableDisableBtnRename()
             setupRecyclerView()
         } else {
             val intent = Intent(this, AudioPlayerActivity::class.java)
@@ -184,8 +201,21 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             supportActionBar?.setDisplayShowHomeEnabled(false)
 
             binding.editBar.visibility = View.VISIBLE
+            binding.mtToolbarGallery.visibility = View.GONE
+            enableDisableBtnRename()
         }
         setupRecyclerView()
+    }
+
+    private fun enableDisableBtnRename() {
+        val isCheckedCount = audioAdapter.differ.currentList.count { it.isChecked }
+        if (isCheckedCount == 1) {
+            binding.btnRename.setImageResource(R.drawable.ic_rename)
+            binding.btnRename.isClickable = true
+        } else {
+            binding.btnRename.setImageResource(R.drawable.ic_rename_disabled)
+            binding.btnRename.isClickable = false
+        }
     }
 
     private fun deleteRecording(record: AudioRecord) {
