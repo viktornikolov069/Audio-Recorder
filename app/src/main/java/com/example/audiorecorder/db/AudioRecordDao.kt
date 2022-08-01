@@ -21,4 +21,35 @@ interface AudioRecordDao {
 
     @Update
     fun update(audioRecord: AudioRecord)
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

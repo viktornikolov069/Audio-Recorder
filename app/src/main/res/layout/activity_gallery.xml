@@ -91,7 +91,6 @@
         android:visibility="gone"
         android:background="@color/opaqueBackGround"/>
 
-
     <include
         android:id="@+id/bsRename"
         layout="@layout/bottom_sheet_rename"/>

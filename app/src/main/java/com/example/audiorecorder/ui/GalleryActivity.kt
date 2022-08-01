@@ -1,11 +1,15 @@
 package com.example.audiorecorder.ui
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,13 +24,14 @@ import com.example.audiorecorder.db.AppDatabase
 import com.example.audiorecorder.db.AudioRecord
 import com.example.audiorecorder.utils.Constants
 import com.example.audiorecorder.utils.Constants.BUNDLE_AUDIO_RECORD_ID
+import com.example.audiorecorder.utils.ListPositioner
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class GalleryActivity : AppCompatActivity(), OnItemClickListener {
+class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner {
 
     private lateinit var binding: ActivityGalleryBinding
     private val audioAdapter by lazy { AudioAdapter(this) }
@@ -36,6 +41,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    /* Recycler View position */
+    private var rvPosition = 0
 
     /* Bottom Sheet Rename variables */
     private lateinit var bottomSheetBehaviour: BottomSheetBehavior<LinearLayout>
@@ -83,12 +91,6 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             }
         })
 
-        /* Hides keyboard on clicking on the tlRecordings (CollapsingToolbarLayout) layout */
-       //binding.tlRecordings.setOnClickListener {
-       //    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-       //    imm.hideSoftInputFromWindow(it.windowToken, 0)
-       //}
-
         /* Enables swiping and deletes a recording on swipe */
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
@@ -119,7 +121,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
                 }
                 audioAdapter.setEditMode(false)
                 binding.mtToolbarGallery.visibility = View.VISIBLE
+                saveListPosition()
                 setupRecyclerView()
+                loadListPosition()
             }
 
             btnSelectAll.setOnClickListener {
@@ -137,6 +141,34 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
                 tiLayout.visibility = View.GONE
                 val checked = audioAdapter.differ.currentList.filter { it.isChecked }
                 bsRename.etFilenameInput.setText(checked[0].filename)
+            }
+
+            /* --- BottomSheetSave Buttons --- */
+            bsRename.btnCancel.setOnClickListener {
+                dismiss()
+            }
+
+            bsRename.btnOk.setOnClickListener {
+                dismiss()
+                val dirPath = "${externalCacheDir?.absolutePath}/"
+                val checked = audioAdapter.differ.currentList.first { it.isChecked }
+                val oldFilename = checked.filename
+                checked.filename = bsRename.etFilenameInput.text.toString()
+
+
+                val newFilename = checked.filename
+                if (newFilename != oldFilename) {
+                    var newFile = File("$dirPath$newFilename.mp3")
+                    File(checked.filePath).renameTo(newFile)
+                }
+                checked.filePath = "$dirPath$newFilename.mp3"
+                appDB.audioRecordDao().update(checked)
+                audioAdapter.differ.submitList(appDB.audioRecordDao().getAll())
+                setupRecyclerView()
+            }
+
+            viewBottomSheetBackGround.setOnClickListener {
+                dismiss()
             }
         }
     }
@@ -161,6 +193,7 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
                 if (appDB.audioRecordDao().getAll().isNotEmpty()) {
                     audioAdapter.differ.submitList(appDB.audioRecordDao().getAll())
                     setupRecyclerView()
+                    setupRecyclerView()
                 }
             }
         }
@@ -182,7 +215,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             audioAdapter.differ.currentList[position].isChecked =
                 !audioAdapter.differ.currentList[position].isChecked
             enableDisableBtnRename()
+            saveListPosition()
             setupRecyclerView()
+            loadListPosition()
         } else {
             val intent = Intent(this, AudioPlayerActivity::class.java)
             intent.putExtra(BUNDLE_AUDIO_RECORD_ID, audioRecord.id)
@@ -204,7 +239,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
             binding.mtToolbarGallery.visibility = View.GONE
             enableDisableBtnRename()
         }
+        saveListPosition()
         setupRecyclerView()
+        loadListPosition()
     }
 
     private fun enableDisableBtnRename() {
@@ -256,6 +293,49 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener {
         runOnUiThread {
             setupRecyclerView()
         }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun dismiss() {
+        binding.apply {
+            viewBottomSheetBackGround.visibility = View.GONE
+            binding.tiLayout.visibility = View.VISIBLE
+            hideKeyboard(bsRename.etFilenameInput)
+            Handler(Looper.getMainLooper()).postDelayed({
+                bottomSheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
+
+            }, 100)
+            hideKeyboard(bsRename.etFilenameInput)
+        }
+    }
+
+    override val recyclerScrollKey = "bg.co.vik.scrollposition"
+
+    override fun loadListPosition() {
+        binding.apply {
+           // var scrollPosition = appDB.audioRecordDao().getPosition()[0]
+            if (rvPosition > 0 &&
+                rvPosition < rvGallary.layoutManager!!.childCount) {
+                rvPosition++ // To offset the "completely visible" item under the action bar
+            }
+            rvGallary.scrollToPosition(rvPosition)
+        }
+    }
+
+    override fun saveListPosition() {
+        rvPosition = (binding.rvGallary.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        //rvPosition = RecyclerViewPosition(position)
+        //appDB.audioRecordDao().insertPosition(rvPosition)
+    }
+
+    override fun resetListPosition() {
+        //val updatedPosition = RecyclerViewPosition(0)
+        //updatedPosition.id = 0
+       // appDB.audioRecordDao().updatePosition(updatedPosition)
     }
 }
 
