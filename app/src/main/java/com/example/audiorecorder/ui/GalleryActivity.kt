@@ -72,7 +72,6 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
         }
 
         /* --- Initialise BottomSheetBehavior and Setup --- */
-
         bottomSheetBehaviour = BottomSheetBehavior.from(binding.bsRename.bottomSheetRename)
         bottomSheetBehaviour.peekHeight = 0 // This hides the bottom sheet
         bottomSheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -113,8 +112,6 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
 
         binding.apply {
             binding.btnClose.setOnClickListener {
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                supportActionBar?.setDisplayShowHomeEnabled(true)
                 binding.editBar.visibility = View.GONE
                 audioAdapter.differ.currentList.map {
                     it.isChecked = false
@@ -131,7 +128,11 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
                 audioAdapter.differ.currentList.map {
                     it.isChecked = allChecked
                 }
+                btnRename.isClickable = false
+                btnRename.setImageResource(R.drawable.ic_rename_disabled)
+                saveListPosition()
                 setupRecyclerView()
+                loadListPosition()
             }
 
             btnRename.isClickable = false
@@ -164,7 +165,9 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
                 checked.filePath = "$dirPath$newFilename.mp3"
                 appDB.audioRecordDao().update(checked)
                 audioAdapter.differ.submitList(appDB.audioRecordDao().getAll())
+                saveListPosition()
                 setupRecyclerView()
+                loadListPosition()
             }
 
             viewBottomSheetBackGround.setOnClickListener {
@@ -192,7 +195,6 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
             binding.apply {
                 if (appDB.audioRecordDao().getAll().isNotEmpty()) {
                     audioAdapter.differ.submitList(appDB.audioRecordDao().getAll())
-                    setupRecyclerView()
                     setupRecyclerView()
                 }
             }
@@ -231,14 +233,12 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
         audioAdapter.differ.currentList[position].isChecked =
             !audioAdapter.differ.currentList[position].isChecked
 
-        if (audioAdapter.isEditMode() && binding.editBar.visibility == View.GONE) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            supportActionBar?.setDisplayShowHomeEnabled(false)
-
+        if (binding.editBar.visibility == View.GONE) {
             binding.editBar.visibility = View.VISIBLE
             binding.mtToolbarGallery.visibility = View.GONE
-            enableDisableBtnRename()
         }
+        enableDisableBtnRename()
+
         saveListPosition()
         setupRecyclerView()
         loadListPosition()
