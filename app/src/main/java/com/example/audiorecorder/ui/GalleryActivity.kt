@@ -135,7 +135,10 @@ class GalleryActivity : AppCompatActivity(), OnItemClickListener, ListPositioner
                     it.isChecked = allChecked
                 }
                 btnRename.isClickable = false
+                btnInfo.isClickable = false
                 btnRename.setImageResource(R.drawable.ic_rename_disabled)
+                btnInfo.setImageResource(R.drawable.ic_info_disabled)
+
                 saveListPosition()
                 setupRecyclerView()
                 loadListPosition()
