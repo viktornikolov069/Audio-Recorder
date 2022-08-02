@@ -29,13 +29,13 @@ In GalleryActivity:
 * [x] User can long click a recording whcih will activate the edit mode and show the hidden toolbar.
 * [x] User can search for a recording using the search bar.
 
-        In Toolbar:
-        * [x] User can press the select all button and select all rows.
-        * [x] User can press the rename button only if single row is selected and rename recording.
-        * [x] User can press the info/details button and go to DetailsActivity where details about the selected recording a shown.
-        * [x] User can press the X button and exit edit mode.
+In Toolbar:
+* [x] User can press the select all button and select all rows.
+* [x] User can press the rename button only if single row is selected and rename recording.
+* [x] User can press the info/details button and go to DetailsActivity where details about the selected recording a shown.
+* [x] User can press the X button and exit edit mode.
     
-    In AudioPlayerActivity    
+In AudioPlayerActivity:  
     
     
 
