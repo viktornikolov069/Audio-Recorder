@@ -52,7 +52,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-There are some bugs that have to be fixed like the RV bug and others and there are improvements that can be maid like using fragments and others.
+There are some bugs that have to be fixed like the RV bug and others and there are improvements that can be made like using fragments and others.
 
 ## License
 
