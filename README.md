@@ -16,6 +16,7 @@ The following **required functionality** is completed:
 
 
 The following **functionality** is completed:
+
 In MainActivity:
 * [x] User can press the record button and record audio. Pause if pressed again.
 * [x] User can press the done button and a bottom sheet layout will appear in which the save, rename or cancel options are available.
