@@ -36,15 +36,11 @@ In Toolbar:
 * [x] User can press the X button and exit edit mode.
     
 In AudioPlayerActivity:  
-* [x] Room database is used to store the audio files in a mp3 format.
-* [x] User can search for a recoring using the search field.
-* [x] User can delete recor
+* [x] User can press the back, play/pause, forward, change speed and seek bar to change audio state and speed.
 
-**TO DO REQUIRED**
-* [x] List of existing recordings.
-* [ ] Check details about record.
-* [x] Listen to a recording.
-* [ ] Delete a recording.
+**TO DO**
+* [x] Fix recycle view bugs. (Can't hold more than 12/13 items without changing order. I belive the problem comes from DiffUtils beacuse other apps that I have made have the same bug for example NoteApp and BudgetTracker)
+* [x] Some other small bugs. 
 
 ## Video Walkthrough
 
@@ -56,7 +52,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Some challenges solved many challenges ahead.
+There are some bugs that have to be fixed like the RV bug and others and there are improvements that can be maid like using fragments and others.
 
 ## License
 
