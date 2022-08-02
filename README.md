@@ -10,32 +10,49 @@ The following **required functionality** is completed:
 * [x] Create a new audio recording.
 * [x] Create a list of recordings.
 * [x] Listen to recording.
+* [x] Delete recording.
+* [x] Rename recording.
+* [x] Show details about recording.
 
 
 The following **functionality** is completed:
-* [x] User can press the record button and record audio. Pause if pressed again.
-* [x] User can press the done button and a bottom sheet layout will appear in which the save or cancel options are available.
-* [x] User can press the delete button and stop recording and delete audio.
-* [x] Room database is used to store the audio files in a mp3 format.
-* [x] User can search for a recoring unsing the search field.
 
-**TO DO REQUIRED**
-* [x] List of existing recordings.
-* [ ] Check details about record.
-* [x] Listen to a recording.
-* [ ] Delete a recording.
+In MainActivity:
+* [x] User can press the record button and record audio. Pause if pressed again.
+* [x] User can press the done button and a bottom sheet layout will appear in which the save, rename or cancel options are available.
+* [x] User can press the delete button which will stop the recording and delete audio.
+* [x] User can press the list button and go to GalleryActivity.
+   
+In GalleryActivity:
+* [x] User can swipe to delete recording.
+* [x] User can short click a recording and go to AudioPlayerActivity.
+* [x] User can long click a recording whcih will activate the edit mode and show the hidden toolbar.
+* [x] User can search for a recording using the search bar.
+
+In Toolbar:
+* [x] User can press the select all button and select all rows.
+* [x] User can press the rename button only if single row is selected and rename recording.
+* [x] User can press the info/details button and go to DetailsActivity where details about the selected recording a shown.
+* [x] User can press the X button and exit edit mode.
+    
+In AudioPlayerActivity:  
+* [x] User can press the back, play/pause, forward, change speed and seek bar to change audio state and speed.
+
+**TO DO**
+* [x] Fix recycle view bugs. (Can't hold more than 12/13 items without changing order. I belive the problem comes from DiffUtils beacuse other apps that I have made have the same bug for example NoteApp and BudgetTracker)
+* [x] Some other small bugs. 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/sixth_state/audio_recorder_6.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/viktornikolov069/Audio-Recorder/blob/main/audio_recorder_6.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Some challenges solved many challenges ahead.
+There are some bugs that have to be fixed like the RV bug and others and there are improvements that can be maid like using fragments and others.
 
 ## License
 
