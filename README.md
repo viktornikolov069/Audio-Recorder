@@ -28,6 +28,7 @@ In GalleryActivity:
 * [x] User can short click a recording and go to AudioPlayerActivity.
 * [x] User can long click a recording whcih will activate the edit mode and show the hidden toolbar.
 * [x] User can search for a recording using the search bar.
+
         In Toolbar:
         * [x] User can press the select all button and select all rows.
         * [x] User can press the rename button only if single row is selected and rename recording.
