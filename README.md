@@ -36,9 +36,6 @@ In Toolbar:
 * [x] User can press the X button and exit edit mode.
     
 In AudioPlayerActivity:  
-    
-    
-
 * [x] Room database is used to store the audio files in a mp3 format.
 * [x] User can search for a recoring using the search field.
 * [x] User can delete recor
