@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.DetailsActivity">
+
+    <!-- TOOLBAR LAYOUT DETAILS -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/mtToolbarDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:title="Details">
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- FILE / NAME -->
+    <TextView
+        android:id="@+id/tvLabelFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="File:"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mtToolbarDetails" />
+
+    <TextView
+        android:id="@+id/tvFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelFile"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelFile"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelFile"
+        android:textSize="25sp"
+        tools:text="some file name" />
+
+    <!-- CREATED / IN WHAT TIME -->
+    <TextView
+        android:id="@+id/tvLabelCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created:"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@id/tvLabelFile"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelFile" />
+
+    <TextView
+        android:id="@+id/tvCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelCreated"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelCreated"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelCreated"
+        android:textSize="25sp"
+        tools:text="some date created" />
+
+    <!-- DURATION / HOW MUCH TIME -->
+    <TextView
+        android:id="@+id/tvLabelDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duration:"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@id/tvLabelCreated"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelCreated" />
+
+    <TextView
+        android:id="@+id/tvDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:maxLines="4"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLabelDuration"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelDuration"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelDuration"
+        android:textSize="25sp"
+        tools:text="some duration" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

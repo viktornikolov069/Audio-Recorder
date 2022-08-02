@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.audiorecorder.databinding.ItemLayoutBinding
 import com.example.audiorecorder.db.AudioRecord
+import com.example.audiorecorder.ui.DetailsActivity
+import com.example.audiorecorder.ui.GalleryActivity
 import java.text.SimpleDateFormat
 import java.util.*
 

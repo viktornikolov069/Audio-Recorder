@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
             btnDone.setOnClickListener {
                 stopRecorder()
-                Toast.makeText(this@MainActivity, "Record saved", Toast.LENGTH_SHORT).show()
+
 
                 bottomSheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
                 viewBottomSheetBackGround.visibility = View.VISIBLE
@@ -134,7 +134,8 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
             btnDelete.setOnClickListener {
                 stopRecorder()
                 File("$dirPath$filename.mp3").delete()
-                Toast.makeText(this@MainActivity, "Record deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Record deleted",
+                    Toast.LENGTH_SHORT).show()
             }
             btnDelete.isClickable = false
 
@@ -147,6 +148,8 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
             bottomSheetSave.btnOk.setOnClickListener {
                 dismiss()
                 save()
+                Toast.makeText(this@MainActivity, "Record saved",
+                    Toast.LENGTH_SHORT).show()
             }
 
             viewBottomSheetBackGround.setOnClickListener {
@@ -265,6 +268,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         }
     }
 
+    /* Save a new recording to database and file system */
     private fun save() {
         val newFilename = binding.bottomSheetSave.etFilenameInput.text.toString()
         if (newFilename != filename) {
@@ -282,7 +286,6 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         /* Running on background thread for better performance */
         GlobalScope.launch {
             appDB.audioRecordDao().insert(record)
-            Log.d("tag", "saving test")
         }
     }
 }
