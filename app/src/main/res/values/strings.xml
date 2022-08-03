@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AudioRecorder</string>
+    <string name="app_name">ARec</string>
     <string name="deleted_transaction">Recording deleted!</string>
     <string name="undo">Undo</string>
     <!-- TODO: Remove or change this placeholder text -->
