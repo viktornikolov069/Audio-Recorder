@@ -122,12 +122,17 @@ class AudioPlayerActivity : AppCompatActivity() {
             }
 
             chipSpeed.setOnClickListener {
+                val playing = mediaPlayer.isPlaying
                 when (playBackSpeed) {
                     2f -> playBackSpeed = 0.5f
                     else -> playBackSpeed += 0.5f
                 }
                 mediaPlayer.playbackParams = PlaybackParams().setSpeed(playBackSpeed)
                 chipSpeed.text = "x $playBackSpeed"
+                if (!playing) {
+                    mediaPlayer.pause()
+                }
+
             }
 
             /* Change seekBar position */
